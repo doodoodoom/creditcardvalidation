@@ -1,8 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-// var lookup = require("binlookup");
-
 import "./styles.css";
 
 class App extends React.Component {
@@ -14,18 +12,30 @@ class App extends React.Component {
     };
 
     this.handleNumberChange = this.handleNumberChange.bind(this);
-  }
+  };
 
   handleNumberChange(event) {
     // handle formatting
+    let unformatted = event.target.value.replace(/ /gi, "");
     if (event.target.value.length < 4 || (event.target.value.length > 5 && event.target.value.length < 9) || (event.target.value.length > 10 && event.target.value.length < 14) || event.target.value.length > 15) {
-      this.setState({ formattedNumber: event.target.value, number: event.target.value.replace(/ /gi, "") });
+      this.setState({ formattedNumber: event.target.value, number: unformatted });
     } else {
       event.target.value += " ";
-      this.setState({ formattedNumber: event.target.value, number: event.target.value.replace(/ /gi, "") });
+      this.setState({ formattedNumber: event.target.value, number: unformatted });
     }
 
-  }
+    //handle icon lookup
+    var lookup = require("binlookup")();
+    lookup(unformatted, function( err, data ){
+      if (err) {
+        console.log('Not enough data');
+        return;
+      }
+
+      console.log('This is the card type: ', data.scheme);
+    });
+
+  };
 
   render() {
     return (
@@ -45,9 +55,9 @@ class App extends React.Component {
         <h2>Start editing to see some magic happen!</h2> */}
       </div>
     );
-  }
+  };
   
-}
+};
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
