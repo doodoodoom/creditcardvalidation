@@ -14,7 +14,13 @@ class App extends React.Component {
   }
 
   handleNumberChange(event) {
-    this.setState({ number: event.target.value });
+    // handle formatting
+    if (event.target.value.length < 4 || (event.target.value.length > 5 && event.target.value.length < 9) || (event.target.value.length > 10 && event.target.value.length < 14) || event.target.value.length > 15) {
+      this.setState({ number: event.target.value });
+    } else {
+      event.target.value += ' ';
+      this.setState({ number: event.target.value });
+    }
   }
 
   render() {
