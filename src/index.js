@@ -1,13 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+// var lookup = require("binlookup");
+
 import "./styles.css";
 
 class App extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      number: ''
+      formattedNumber: "",
+      number: ""
     };
 
     this.handleNumberChange = this.handleNumberChange.bind(this);
@@ -16,11 +19,12 @@ class App extends React.Component {
   handleNumberChange(event) {
     // handle formatting
     if (event.target.value.length < 4 || (event.target.value.length > 5 && event.target.value.length < 9) || (event.target.value.length > 10 && event.target.value.length < 14) || event.target.value.length > 15) {
-      this.setState({ number: event.target.value });
+      this.setState({ formattedNumber: event.target.value, number: event.target.value.replace(/ /gi, "") });
     } else {
-      event.target.value += ' ';
-      this.setState({ number: event.target.value });
+      event.target.value += " ";
+      this.setState({ formattedNumber: event.target.value, number: event.target.value.replace(/ /gi, "") });
     }
+
   }
 
   render() {
