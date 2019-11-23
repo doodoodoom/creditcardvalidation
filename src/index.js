@@ -39,11 +39,10 @@ class App extends React.Component {
         self.setState({ type: `/${data.scheme}.svg` });
       });
     }
-
   };
 
   handleBlur() {
-    if (this.state.number.length === 16 && Number(this.state.number)) {
+    if (this.state.number.length === 16 && (Number(this.state.number) || Number(this.state.number) >= 0)) {
       this.setState({ valid: "/check.svg"});
     } else {
       this.setState({ valid: "/x.svg"});
