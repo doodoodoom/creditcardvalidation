@@ -11,6 +11,7 @@ class App extends React.Component {
       number: "",
       type: "",
       valid: "",
+      error: false
     };
 
     this.handleNumberChange = this.handleNumberChange.bind(this);
@@ -25,10 +26,10 @@ class App extends React.Component {
     if (self.state.number.length === 5 || self.state.number.length === 7) {
       lookup(unformatted, function( err, data ){
         if (err) {
-          console.log("Invalid card");
+          self.setState({ error: true });
           return;
         }
-        self.setState({ type: `/${data.scheme}.svg` });
+        self.setState({ type: `/${data.scheme}.svg`, error: false });
       });
     }
 
