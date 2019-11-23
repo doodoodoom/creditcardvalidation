@@ -18,16 +18,8 @@ class App extends React.Component {
   };
 
   handleNumberChange(event) {
-    // handle formatting
-    let unformatted = event.target.value.replace(/ /gi, "");
-    if (event.target.value.length < 4 || (event.target.value.length > 5 && event.target.value.length < 9) || (event.target.value.length > 10 && event.target.value.length < 14) || event.target.value.length > 15) {
-      this.setState({ formattedNumber: event.target.value, number: unformatted });
-    } else {
-      event.target.value += " ";
-      this.setState({ formattedNumber: event.target.value, number: unformatted });
-    }
-
     //handle icon lookup
+    let unformatted = event.target.value.replace(/ /gi, "");
     const self = this;
     const lookup = require("binlookup")();
     if (self.state.number.length === 5 || self.state.number.length === 7) {
@@ -38,6 +30,23 @@ class App extends React.Component {
         }
         self.setState({ type: `/${data.scheme}.svg` });
       });
+    }
+
+    // handle formatting
+    if (this.state.type !== "/amex.svg") {
+      if (event.target.value.length < 4 || (event.target.value.length > 5 && event.target.value.length < 9) || (event.target.value.length > 10 && event.target.value.length < 14) || event.target.value.length > 15) {
+        this.setState({ formattedNumber: event.target.value, number: unformatted });
+      } else {
+        event.target.value += " ";
+        this.setState({ formattedNumber: event.target.value, number: unformatted });
+      }
+    } else {
+      if (event.target.value.length < 4 || (event.target.value.length > 5 && event.target.value.length < 11) || event.target.value.length > 12) {
+        this.setState({ formattedNumber: event.target.value, number: unformatted });
+      } else {
+        event.target.value += " ";
+        this.setState({ formattedNumber: event.target.value, number: unformatted });
+      }
     }
   };
 
