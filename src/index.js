@@ -45,6 +45,8 @@ class App extends React.Component {
   handleBlur() {
     if (this.state.number.length === 16 && Number(this.state.number)) {
       this.setState({ valid: "/check.svg"});
+    } else {
+      this.setState({ valid: "/x.svg"});
     }
   };
 
@@ -53,7 +55,7 @@ class App extends React.Component {
       <div className="App">
         <div id="title">Credit Card Number</div>
         <img id="type" src={this.state.type} style={{ width: "50px" }} />
-        <img id="valid" src={this.state.valid} style={{width: "35px" }} />
+        <img id="valid" src={this.state.valid} style={{width: "25px" }} />
         <input type="text" required maxLength="19" size="30" placeholder="1234 1234 1234 1234" onChange={this.handleNumberChange} onBlur={this.handleBlur}></input>
         
         {/*<img src="/discover.svg" style={{ width: "50px", marginLeft: "10px" }} />
