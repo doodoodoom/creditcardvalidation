@@ -51,10 +51,18 @@ class App extends React.Component {
   };
 
   handleBlur() {
-    if (this.state.number.length === 16 && (Number(this.state.number) || Number(this.state.number) >= 0)) {
-      this.setState({ valid: "/check.svg"});
+    if (this.state.type !== "/amex.svg") {
+      if (this.state.number.length === 16 && (Number(this.state.number) || Number(this.state.number) >= 0)) {
+        this.setState({ valid: "/check.svg"});
+      } else {
+        this.setState({ valid: "/x.svg"});
+      }
     } else {
-      this.setState({ valid: "/x.svg"});
+      if (this.state.number.length === 15 && (Number(this.state.number) || Number(this.state.number) >= 0)) {
+        this.setState({ valid: "/check.svg"});
+      } else {
+        this.setState({ valid: "/x.svg"});
+      }
     }
   };
 
