@@ -34,8 +34,7 @@ class App extends React.Component {
           console.log("Invalid card");
           return;
         }
-        console.log("This is the card type: ", data.scheme);
-        self.setState({ type: data.scheme });
+        self.setState({ type: `/${data.scheme}.svg` });
       });
     }
 
@@ -44,10 +43,11 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <div>Credit Card Number</div>
+        <div id="title">Credit Card Number</div>
+        <img src={this.state.type} style={{ width: "50px" }} />
         <input type="text" required maxLength="19" size="30" placeholder="1234 1234 1234 1234" onChange={this.handleNumberChange}></input>
-        {/* <img src="/amex.svg" style={{ width: "50px" }} />
-        <img src="/discover.svg" style={{ width: "50px", marginLeft: "10px" }} />
+        
+        {/*<img src="/discover.svg" style={{ width: "50px", marginLeft: "10px" }} />
         <img src="/generic.svg" style={{ width: "50px", marginLeft: "10px" }} />
         <img
           src="/mastercard.svg"
