@@ -9,10 +9,12 @@ class App extends React.Component {
     this.state = {
       formattedNumber: "",
       number: "",
-      type: ""
+      type: "",
+      valid: "",
     };
 
     this.handleNumberChange = this.handleNumberChange.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
   };
 
   handleNumberChange(event) {
@@ -40,12 +42,19 @@ class App extends React.Component {
 
   };
 
+  handleBlur() {
+    if (this.state.number.length === 16 && Number(this.state.number)) {
+      this.setState({ valid: "/check.svg"});
+    }
+  };
+
   render() {
     return (
       <div className="App">
         <div id="title">Credit Card Number</div>
-        <img src={this.state.type} style={{ width: "50px" }} />
-        <input type="text" required maxLength="19" size="30" placeholder="1234 1234 1234 1234" onChange={this.handleNumberChange}></input>
+        <img id="type" src={this.state.type} style={{ width: "50px" }} />
+        <img id="valid" src={this.state.valid} style={{width: "35px" }} />
+        <input type="text" required maxLength="19" size="30" placeholder="1234 1234 1234 1234" onChange={this.handleNumberChange} onBlur={this.handleBlur}></input>
         
         {/*<img src="/discover.svg" style={{ width: "50px", marginLeft: "10px" }} />
         <img src="/generic.svg" style={{ width: "50px", marginLeft: "10px" }} />

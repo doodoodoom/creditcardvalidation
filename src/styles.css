@@ -10,9 +10,15 @@ input {
   box-sizing: border-box;
 }
 
-img {
+#type {
   position: relative;
   left: 590px;
+  top: 11px;
+}
+
+#valid {
+  position: relative;
+  left: 650px;
   top: 11px;
 }
 
