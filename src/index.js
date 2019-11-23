@@ -8,7 +8,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       formattedNumber: "",
-      number: ""
+      number: "",
+      type: ""
     };
 
     this.handleNumberChange = this.handleNumberChange.bind(this);
@@ -25,15 +26,18 @@ class App extends React.Component {
     }
 
     //handle icon lookup
-    var lookup = require("binlookup")();
-    lookup(unformatted, function( err, data ){
-      if (err) {
-        console.log('Not enough data');
-        return;
-      }
-
-      console.log('This is the card type: ', data.scheme);
-    });
+    const self = this;
+    const lookup = require("binlookup")();
+    if (self.state.number.length === 5 || self.state.number.length === 7) {
+      lookup(unformatted, function( err, data ){
+        if (err) {
+          console.log("Invalid card");
+          return;
+        }
+        console.log("This is the card type: ", data.scheme);
+        self.setState({ type: data.scheme });
+      });
+    }
 
   };
 
