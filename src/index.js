@@ -34,6 +34,8 @@ class App extends React.Component {
 
     // handle formatting
     if (this.state.type !== "/amex.svg") {
+      const input = document.querySelector("input");
+      input.setAttribute("maxLength", "19");
       if (event.target.value.length < 4 || (event.target.value.length > 5 && event.target.value.length < 9) || (event.target.value.length > 10 && event.target.value.length < 14) || event.target.value.length > 15) {
         this.setState({ formattedNumber: event.target.value, number: unformatted });
       } else {
@@ -41,6 +43,8 @@ class App extends React.Component {
         this.setState({ formattedNumber: event.target.value, number: unformatted });
       }
     } else {
+      const input = document.querySelector("input");
+      input.setAttribute("maxLength", "17");
       if (event.target.value.length < 4 || (event.target.value.length > 5 && event.target.value.length < 11) || event.target.value.length > 12) {
         this.setState({ formattedNumber: event.target.value, number: unformatted });
       } else {
