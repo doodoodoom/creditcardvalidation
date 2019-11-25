@@ -84,16 +84,6 @@ class App extends React.Component {
         <img id="valid" src={this.state.valid} style={{width: "25px" }} />
         <input type="text" required maxLength="19" size="30" placeholder="1234 1234 1234 1234" onChange={this.handleNumberChange} onBlur={this.handleBlur}></input>
         <div id="error" hidden>Oops! I have a bad feeling about this!</div>
-        {/*<img src="/discover.svg" style={{ width: "50px", marginLeft: "10px" }} />
-        <img src="/generic.svg" style={{ width: "50px", marginLeft: "10px" }} />
-        <img
-          src="/mastercard.svg"
-          style={{ width: "50px", marginLeft: "10px" }}
-        />
-        <img src="/visa.svg" style={{ width: "50px", marginLeft: "10px" }} />
-        <img src="/check.svg" style={{ width: "35px", marginLeft: "10px" }} />
-        <img src="/x.svg" style={{ width: "27px", marginLeft: "10px" }} />
-        <h2>Start editing to see some magic happen!</h2> */}
       </div>
     );
   };
