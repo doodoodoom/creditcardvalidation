@@ -5,6 +5,8 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
     "binlookup": "^2.0.1",
     "react": "16.8.6",
     "react-dom": "16.8.6",
