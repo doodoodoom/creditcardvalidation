@@ -37,3 +37,19 @@ it("renders a check mark correctly when the credit card is valid", () => {
   fireEvent.blur(getByPlaceholderText("1234 1234 1234 1234"));
   expect(getByAltText("Valid").getAttribute("src")).toEqual("/check.svg");
 });
+
+// Test 4 -- Ensure x mark appears when card is invalid
+it("renders a check mark correctly when the credit card is valid", () => {
+  const { getByPlaceholderText, getByAltText } = render(<App />);
+  fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "6011 0017 2222 22" } });
+  fireEvent.blur(getByPlaceholderText("1234 1234 1234 1234"));
+  expect(getByAltText("Valid").getAttribute("src")).toEqual("/x.svg");
+  // reset to valid
+  fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "6011 0017 2222 2222" } });
+  fireEvent.blur(getByPlaceholderText("1234 1234 1234 1234"));
+  expect(getByAltText("Valid").getAttribute("src")).toEqual("/check.svg");
+  // test invalid again
+  fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "6011 0017 2222 22AB" } });
+  fireEvent.blur(getByPlaceholderText("1234 1234 1234 1234"));
+  expect(getByAltText("Valid").getAttribute("src")).toEqual("/x.svg");
+});
