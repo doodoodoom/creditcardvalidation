@@ -53,3 +53,16 @@ it("renders a check mark correctly when the credit card is valid", () => {
   fireEvent.blur(getByPlaceholderText("1234 1234 1234 1234"));
   expect(getByAltText("Valid").getAttribute("src")).toEqual("/x.svg");
 });
+
+// Test 5 -- Ensure amex cards format correctly
+xit("formats amex cards correctly", () => {
+  const { getByPlaceholderText } = render(<App />);
+  fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "3712" } });
+  expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 ");
+  fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "3712 3456" } });
+  expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 3456");
+  fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "3712 345678" } });
+  expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 345678 ");
+  fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "3712 345678 95004" } });
+  expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 345678 95004");
+});
