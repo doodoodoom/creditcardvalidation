@@ -23,7 +23,7 @@ class App extends React.Component {
     let unformatted = event.target.value.replace(/ /gi, "");
     const self = this;
     const lookup = require("binlookup")();
-    // if (self.state.number.length === 5 || self.state.number.length === 7) {
+    if (unformatted.length === 6 || unformatted === 8) {
       lookup(unformatted, function( err, data ){
         if (err) {
           self.setState({ error: true });
@@ -31,7 +31,7 @@ class App extends React.Component {
         }
         self.setState({ type: `/${data.scheme}.svg`, error: false });
       });
-    // }
+    }
 
     // handle formatting
     if (this.state.type !== "/amex.svg") {

@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { render, fireEvent, wait, waitForElement, waitForDomChange } from '@testing-library/react';
+import { render, fireEvent, waitForElement } from '@testing-library/react';
 import App from "./index";
-import { JestEnvironment } from "@jest/environment";
+
+jest.setTimeout(20 * 1000);
 
 // Test 0 -- Ensure App renders without issue
 it("renders without crashing", () => {
@@ -23,9 +24,8 @@ it("formats credit card numbers correctly", () => {
   expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("1234 1234 1234 1234");
 });
 
-// Test 2 -- Ensure correct card type is received from API and renders *WORK IN PROGRESS*
+// Test 2 -- Ensure correct card type is received from API and renders
 it("gets and renders the card type correctly", async () => {
-  jest.setTimeout(20 * 1000);
   const { getByPlaceholderText, getByAltText } = render(<App />);
   fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "6011 00" } });
   await waitForElement(() => getByAltText("Type").getAttribute("src") === "/discover.svg", { timeout: 20 * 1000 });
@@ -57,14 +57,19 @@ it("renders a check mark correctly when the credit card is valid", () => {
 });
 
 // Test 5 -- Ensure amex cards format correctly *WORK IN PROGRESS*
-xit("formats amex cards correctly", async () => {
-  const { getByPlaceholderText } = render(<App />);
+it("formats amex cards correctly", async () => {
+  const { getByPlaceholderText, getByAltText } = render(<App />);
   fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "3712" } });
-  await expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 ");
+  expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 ");
+  fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "3712 34" } });
+  await waitForElement(() => getByAltText("Type").getAttribute("src") === "/amex.svg", { timeout: 20 * 1000 });
+  expect(getByAltText("Type").getAttribute("src")).toEqual("/amex.svg");
   fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "3712 3456" } });
-  await expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 3456");
+  expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 3456");
+  await waitForElement(() => getByAltText("Type").getAttribute("src") === "/amex.svg", { timeout: 20 * 1000 });
+  expect(getByAltText("Type").getAttribute("src")).toEqual("/amex.svg");
   fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "3712 345678" } });
-  await expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 345678 ");
+  expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 345678 ");
   fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "3712 345678 95004" } });
-  await expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 345678 95004");
+  expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 345678 95004");
 });
