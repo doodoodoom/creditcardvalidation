@@ -23,7 +23,7 @@ class App extends React.Component {
     let unformatted = event.target.value.replace(/ /gi, "");
     const self = this;
     const lookup = require("binlookup")();
-    if (unformatted.length === 6 || unformatted === 8) {
+    if (unformatted.length === 6 || unformatted.length === 8) {
       lookup(unformatted, function( err, data ){
         if (err) {
           self.setState({ error: true });

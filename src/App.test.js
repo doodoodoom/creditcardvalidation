@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { render, fireEvent, waitForElement } from '@testing-library/react';
 import App from "./index";
 
-jest.setTimeout(20 * 1000);
+jest.setTimeout(60 * 1000);
 
 // Test 0 -- Ensure App renders without issue
 xit("renders without crashing", () => {
@@ -25,10 +25,10 @@ xit("formats credit card numbers correctly", () => {
 });
 
 // Test 2 -- Ensure correct card type is received from API and renders
-xit("gets and renders the card type correctly", async () => {
+it("gets and renders the card type correctly", async () => {
   const { getByPlaceholderText, getByAltText } = render(<App />);
   fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "6011 00" } });
-  await waitForElement(() => getByAltText("Type").getAttribute("src") === "/discover.svg", { timeout: 20 * 1000 });
+  await waitForElement(() => getByAltText("Type").getAttribute("src") === "/discover.svg", { timeout: 60 * 1000 });
   expect(getByAltText("Type").getAttribute("src")).toEqual("/discover.svg");
 });
 
@@ -57,16 +57,16 @@ xit("renders a check mark correctly when the credit card is valid", () => {
 });
 
 // Test 5 -- Ensure amex cards format correctly
-xit("formats amex cards correctly", async () => {
+it("formats amex cards correctly", async () => {
   const { getByPlaceholderText, getByAltText } = render(<App />);
   fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "3712" } });
   expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 ");
   fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "3712 34" } });
-  await waitForElement(() => getByAltText("Type").getAttribute("src") === "/amex.svg", { timeout: 20 * 1000 });
+  await waitForElement(() => getByAltText("Type").getAttribute("src") === "/amex.svg", { timeout: 60 * 1000 });
   expect(getByAltText("Type").getAttribute("src")).toEqual("/amex.svg");
   fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "3712 3456" } });
   expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 3456");
-  await waitForElement(() => getByAltText("Type").getAttribute("src") === "/amex.svg", { timeout: 20 * 1000 });
+  await waitForElement(() => getByAltText("Type").getAttribute("src") === "/amex.svg", { timeout: 60 * 1000 });
   expect(getByAltText("Type").getAttribute("src")).toEqual("/amex.svg");
   fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "3712 345678" } });
   expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 345678 ");
@@ -76,5 +76,15 @@ xit("formats amex cards correctly", async () => {
 
 // Test 6 -- Ensure error message appropriately appears
 it("throws an error message when lookup fails and/or provides no data", async () => {
-  const { getByPlaceholderText, getByAltText } = render(<App />);
+  const { getByPlaceholderText, getByText, getByAltText } = render(<App />);
+  expect(getByText("Oops! I have a bad feeling about this!").hasAttribute("hidden")).toEqual(true);
+  // fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "1111 1111" } });
+  // await waitForElement(() => getByAltText("Type").getAttribute("src") !== "", { timeout: 60 * 1000 });
+  // fireEvent.blur(getByPlaceholderText("1234 1234 1234 1234"));
+  // expect(getByText("Oops! I have a bad feeling about this!").hasAttribute("hidden")).toEqual(false);
+  fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "6011 0017" } });
+  await waitForElement(() => getByAltText("Type").getAttribute("src") === "/discover.svg", { timeout: 60 * 1000 });
+  fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "6011 0017 1111 1111" } });
+  fireEvent.blur(getByPlaceholderText("1234 1234 1234 1234"));
+  expect(getByText("Oops! I have a bad feeling about this!").hasAttribute("hidden")).toEqual(true);
 });
