@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { render, fireEvent, wait } from '@testing-library/react';
+import { render, fireEvent, wait, waitForElement, waitForDomChange } from '@testing-library/react';
 import App from "./index";
+import { JestEnvironment } from "@jest/environment";
 
 // Test 0 -- Ensure App renders without issue
 it("renders without crashing", () => {
@@ -23,11 +24,12 @@ it("formats credit card numbers correctly", () => {
 });
 
 // Test 2 -- Ensure correct card type is received from API and renders *WORK IN PROGRESS*
-xit("gets and renders the card type correctly", () => {
+it("gets and renders the card type correctly", async () => {
+  jest.setTimeout(20 * 1000);
   const { getByPlaceholderText, getByAltText } = render(<App />);
   fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "6011 00" } });
-  let imgSrc = getByAltText("Type");
-  expect(imgSrc.getAttribute("src")).toEqual("/discover.svg")
+  await waitForElement(() => getByAltText("Type").getAttribute("src") === "/discover.svg", { timeout: 20 * 1000 });
+  expect(getByAltText("Type").getAttribute("src")).toEqual("/discover.svg");
 });
 
 // Test 3 -- Ensure check mark appears when card is valid
@@ -54,15 +56,15 @@ it("renders a check mark correctly when the credit card is valid", () => {
   expect(getByAltText("Valid").getAttribute("src")).toEqual("/x.svg");
 });
 
-// Test 5 -- Ensure amex cards format correctly
-xit("formats amex cards correctly", () => {
+// Test 5 -- Ensure amex cards format correctly *WORK IN PROGRESS*
+xit("formats amex cards correctly", async () => {
   const { getByPlaceholderText } = render(<App />);
   fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "3712" } });
-  expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 ");
+  await expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 ");
   fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "3712 3456" } });
-  expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 3456");
+  await expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 3456");
   fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "3712 345678" } });
-  expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 345678 ");
+  await expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 345678 ");
   fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "3712 345678 95004" } });
-  expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 345678 95004");
+  await expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("3712 345678 95004");
 });

@@ -23,7 +23,7 @@ class App extends React.Component {
     let unformatted = event.target.value.replace(/ /gi, "");
     const self = this;
     const lookup = require("binlookup")();
-    if (self.state.number.length === 5 || self.state.number.length === 7) {
+    // if (self.state.number.length === 5 || self.state.number.length === 7) {
       lookup(unformatted, function( err, data ){
         if (err) {
           self.setState({ error: true });
@@ -31,7 +31,7 @@ class App extends React.Component {
         }
         self.setState({ type: `/${data.scheme}.svg`, error: false });
       });
-    }
+    // }
 
     // handle formatting
     if (this.state.type !== "/amex.svg") {
@@ -78,7 +78,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
+      <div title="Credit Card Validation" className="App">
         <div id="title">Credit Card Number</div>
         <img id="type" alt="Type" src={this.state.type} style={{ width: "50px" }} />
         <img id="valid" alt="Valid" src={this.state.valid} style={{width: "25px" }} />
