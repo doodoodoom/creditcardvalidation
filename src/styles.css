@@ -48,3 +48,11 @@ input {
   top: 95px;
 }
 
+#required {
+  position: absolute;
+  left: 220px;
+  color: orange;
+  font-size: 20px;
+  top: 5px;
+}
+
