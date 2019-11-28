@@ -4,27 +4,47 @@
 }
 
 input {
-  width: 80%;
+  position: absolute;
+  left: 75px;
+  top: 25px;
+  width: 25%;
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
+  z-index: 5;
+  font-size: 18px;
 }
 
 #type {
-  position: relative;
-  left: 590px;
-  top: 11px;
+  position: absolute;
+  left: 375px;
+  top: 42px;
+  z-index: 10;
 }
 
 #valid {
-  position: relative;
-  left: 640px;
-  top: 7px;
+  position: absolute;
+  left: 450px;
+  top: 47px;
+  z-index: 10;
 }
 
 #title {
-  position: relative;
+  position: absolute;
   left: 75px;
   text-align: left;
+}
+
+#error {
+  border-style: solid;
+  border-width: 1px;
+  padding: 7px;
+  padding-left: 20px;
+  padding-right: 113px;
+  color: red;
+  border-color: red;
+  position: absolute;
+  left: 75px;
+  top: 95px;
 }
 
