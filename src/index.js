@@ -79,13 +79,14 @@ class App extends React.Component {
     }
   };
 
+  // uncomment the alt attributes in lines 88 and 89 when testing
   render() {
     return (
       <div title="Credit Card Validation" className="App">
         <div id="title">Credit Card Number</div>
         <div id="required">*</div>
         <img id="type" /*alt="Type*/ src={this.state.type} style={{ width: "50px" }} />
-        <img id="valid" /*alt="Valid"*/ src={this.state.valid} style={{width: "25px" }} />
+        <img id="valid" /*alt="Valid"*/ src={this.state.valid} style={{width: "18px" }} />
         <input type="text" required maxLength="19" size="30" placeholder="1234 1234 1234 1234" onChange={this.handleNumberChange} onBlur={this.handleBlur}></input>
         <div id="error" hidden>Oops! I have a bad feeling about this!</div>
       </div>
@@ -95,5 +96,6 @@ class App extends React.Component {
 };
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement); // Comment out this line to run tests
+// Comment out line 100 to run tests
+ReactDOM.render(<App />, rootElement); 
 export default App;
