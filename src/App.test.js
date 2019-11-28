@@ -76,7 +76,7 @@ it("formats amex cards correctly", async () => {
 
 // Test 6 -- Ensure error message appropriately appears
 it("throws an error message when lookup fails and/or provides no data", async () => {
-  const { getByPlaceholderText, getByText, getByAltText } = render(<App />);
+  const { getByPlaceholderText, getByText } = render(<App />);
   expect(getByText("Oops! I have a bad feeling about this!").hasAttribute("hidden")).toEqual(true);
   fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "1111 1111" } });
   await waitForElement(() => getByText("Oops! I have a bad feeling about this!").hasAttribute("hidden") === false, { timeout: 60 * 1000 });
