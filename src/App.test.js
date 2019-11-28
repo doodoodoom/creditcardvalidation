@@ -6,13 +6,13 @@ import App from "./index";
 jest.setTimeout(60 * 1000);
 
 // Test 0 -- Ensure App renders without issue
-xit("renders without crashing", () => {
+it("renders without crashing", () => {
   const div = document.createElement("div");
   ReactDOM.render(<App />, div);
 });
 
 // Test 1 -- Ensure credit card number formats correctly
-xit("formats credit card numbers correctly", () => {
+it("formats credit card numbers correctly", () => {
   const { getByPlaceholderText } = render(<App />);
   fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "1234" } });
   expect(getByPlaceholderText("1234 1234 1234 1234").value).toEqual("1234 ");
@@ -33,7 +33,7 @@ it("gets and renders the card type correctly", async () => {
 });
 
 // Test 3 -- Ensure check mark appears when card is valid
-xit("renders a check mark correctly when the credit card is valid", () => {
+it("renders a check mark correctly when the credit card is valid", () => {
   const { getByPlaceholderText, getByAltText } = render(<App />);
   fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "6011 0017 2222 2222" } });
   fireEvent.blur(getByPlaceholderText("1234 1234 1234 1234"));
@@ -41,7 +41,7 @@ xit("renders a check mark correctly when the credit card is valid", () => {
 });
 
 // Test 4 -- Ensure x mark appears when card is invalid
-xit("renders a check mark correctly when the credit card is valid", () => {
+it("renders a check mark correctly when the credit card is valid", () => {
   const { getByPlaceholderText, getByAltText } = render(<App />);
   fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "6011 0017 2222 22" } });
   fireEvent.blur(getByPlaceholderText("1234 1234 1234 1234"));
@@ -78,13 +78,10 @@ it("formats amex cards correctly", async () => {
 it("throws an error message when lookup fails and/or provides no data", async () => {
   const { getByPlaceholderText, getByText, getByAltText } = render(<App />);
   expect(getByText("Oops! I have a bad feeling about this!").hasAttribute("hidden")).toEqual(true);
-  // fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "1111 1111" } });
-  // await waitForElement(() => getByAltText("Type").getAttribute("src") !== "", { timeout: 60 * 1000 });
-  // fireEvent.blur(getByPlaceholderText("1234 1234 1234 1234"));
-  // expect(getByText("Oops! I have a bad feeling about this!").hasAttribute("hidden")).toEqual(false);
+  fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "1111 1111" } });
+  await waitForElement(() => getByText("Oops! I have a bad feeling about this!").hasAttribute("hidden") === false, { timeout: 60 * 1000 });
+  expect(getByText("Oops! I have a bad feeling about this!").hasAttribute("hidden")).toEqual(false);
   fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "6011 0017" } });
-  await waitForElement(() => getByAltText("Type").getAttribute("src") === "/discover.svg", { timeout: 60 * 1000 });
-  fireEvent.change(getByPlaceholderText("1234 1234 1234 1234"), { target: { value: "6011 0017 1111 1111" } });
-  fireEvent.blur(getByPlaceholderText("1234 1234 1234 1234"));
+  await waitForElement(() => getByText("Oops! I have a bad feeling about this!").hasAttribute("hidden") === true, { timeout: 60 * 1000 });
   expect(getByText("Oops! I have a bad feeling about this!").hasAttribute("hidden")).toEqual(true);
 });
